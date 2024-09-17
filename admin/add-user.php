@@ -16,7 +16,7 @@ if (isset($_POST['save'])){
     } else {
         $query1 = "INSERT INTO user(first_name, last_name, username, password, role) VALUES ('{$fname}', '{$lname}', '{$user}', '{$password}', '{$role}')";
         if (mysqli_query($conn, $query1)) {
-            header("Location: http://localhost:8080/Daily-Bd/admin/users.php");
+            header("Location: {$hostname}/admin/users.php");
         }
     }
 }
