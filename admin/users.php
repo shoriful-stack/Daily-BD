@@ -11,7 +11,10 @@
               <div class="col-md-12">
                 <?php 
                 include "config.php";
-                $query = "SELECT * FROM user ORDER BY user_id DESC";
+                $limit = 3;
+                $page = $_GET['page'];
+                $offset = ($page - 1) * $limit;
+                $query = "SELECT * FROM user ORDER BY user_id DESC LIMIT {$offset},{$limit}";
                 $result = mysqli_query($conn, $query);
                 if(mysqli_num_rows($result) > 0){
                 ?>
@@ -41,12 +44,21 @@
                         <?php } ?>
                       </tbody>
                   </table>
-                  <?php } ?>
-                  <ul class='pagination admin-pagination'>
-                      <li class="active"><a>1</a></li>
-                      <li><a>2</a></li>
-                      <li><a>3</a></li>
-                  </ul>
+                  <?php } 
+                  $sql = "SELECT * FROM user";
+                  $result = mysqli_query($conn, $sql);
+                  if(mysqli_num_rows($result) > 0){
+                    $total_records = mysqli_num_rows($result);
+                    $total_pages = ceil($total_records / $limit);
+
+                    echo '<ul class="pagination admin-pagination">';
+                    for($i = 1; $i <= $total_pages; $i++){
+                        echo '<li><a href="users.php?page='. $i .'">'.$i.'</a></li>';
+                    }
+                    echo '</ul>';
+                  }
+                  ?>
+                      <!-- <li class="active"><a>1</a></li> -->
               </div>
           </div>
       </div>
