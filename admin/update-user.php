@@ -1,3 +1,21 @@
+<?php
+if (isset($_POST['submit'])) {
+    include "config.php";
+
+    // Escape special characters in the input data
+    $user_id = mysqli_real_escape_string($conn, $_POST['user_id']);
+    $fname = mysqli_real_escape_string($conn, $_POST['fname']);
+    $lname = mysqli_real_escape_string($conn, $_POST['lname']);
+    $user = mysqli_real_escape_string($conn, $_POST['username']);
+    $role = mysqli_real_escape_string($conn, $_POST['role']);
+    $query = "UPDATE user SET first_name = '{$fname}', last_name = '{$lname}', username = '{$user}', role = '{$role}'  WHERE user_id = {$user_id}";
+    if (mysqli_query($conn, $query)) {
+        header("Location: {$hostname}/admin/users.php");
+    }
+}
+?>
+
+
 <?php include "header.php"; ?>
 <div id="admin-content">
     <div class="container">
@@ -22,11 +40,11 @@
                             </div>
                             <div class="form-group">
                                 <label>First Name</label>
-                                <input type="text" name="f_name" class="form-control" value="<?php echo $row['first_name'] ?>" placeholder="" required>
+                                <input type="text" name="fname" class="form-control" value="<?php echo $row['first_name'] ?>" placeholder="" required>
                             </div>
                             <div class="form-group">
                                 <label>Last Name</label>
-                                <input type="text" name="l_name" class="form-control" value="<?php echo $row['last_name'] ?>" placeholder="" required>
+                                <input type="text" name="lname" class="form-control" value="<?php echo $row['last_name'] ?>" placeholder="" required>
                             </div>
                             <div class="form-group">
                                 <label>User Name</label>
