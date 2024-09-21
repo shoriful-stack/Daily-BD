@@ -33,7 +33,7 @@
                         if(isset($_POST['login'])){
                             include "config.php";
                             $username = mysqli_real_escape_string($conn, $_POST['username']);
-                            $password = mysqli_real_escape_string($conn, $_POST['password']);
+                            $password = md5($_POST['password']);
 
                             $query = "SELECT user_id, username, role FROM user WHERE username = '{$username}' AND password = '{$password}'";
                             $result = mysqli_query($conn, $query);
@@ -44,7 +44,7 @@
                                     $_SESSION["password"] = $row['password'];
                                     $_SESSION["role"] = $row['role'];
 
-                                    header("Location : {$hostname}/admin/post.php");
+                                    header("Location: {$hostname}/admin/post.php");
                                 }
                             }else{
                                 echo "<div class='alert alert-danger'>Username and password are does not matched</div>";
