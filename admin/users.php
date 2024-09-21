@@ -12,7 +12,12 @@
                 <?php 
                 include "config.php";
                 $limit = 3;
-                $page = $_GET['page'];
+                if(isset($_GET['page'])){
+                  $page = $_GET['page'];
+                }
+                else{
+                  $page = 1;
+                }
                 $offset = ($page - 1) * $limit;
                 $query = "SELECT * FROM user ORDER BY user_id DESC LIMIT {$offset},{$limit}";
                 $result = mysqli_query($conn, $query);
@@ -53,7 +58,13 @@
 
                     echo '<ul class="pagination admin-pagination">';
                     for($i = 1; $i <= $total_pages; $i++){
-                        echo '<li><a href="users.php?page='. $i .'">'.$i.'</a></li>';
+                      if($i == $page){
+                        $active = "active";
+                      }
+                      else{
+                        $active = "";
+                      }
+                        echo '<li class="'.$active.'"><a href="users.php?page='. $i .'">'.$i.'</a></li>';
                     }
                     echo '</ul>';
                   }
