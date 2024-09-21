@@ -19,6 +19,9 @@ if (isset($_POST['save'])){
             header("Location: {$hostname}/admin/users.php");
         }
     }
+    if($_SESSION["role"] == '0'){
+        header("Location: {$hostname}/admin/post.php");
+    }
 }
 ?>
 
