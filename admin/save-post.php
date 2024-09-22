@@ -18,10 +18,7 @@ if(isset($_FILES['fileToUpload'])){
    }
 
    if(empty($errors) === true){
-    move_uploaded_file("$tmp_name", "upload/".$file_name);
-   }else{
-    print_r($errors);
-    die();
+    move_uploaded_file($file_tmp, "upload/".$file_name);
    }
 }
 session_start();

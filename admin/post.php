@@ -1,5 +1,4 @@
 <?php 
-session_start();
 include "header.php"; ?>
   <div id="admin-content">
       <div class="container">
@@ -54,7 +53,7 @@ include "header.php"; ?>
                               <td><?php echo $row['category_name'];?></td>
                               <td><?php echo $row['post_date'];?></td>
                               <td><?php echo $row['username'];?></td>
-                              <td class='edit'><a href='update-post.php'><i class='fa fa-edit'></i></a></td>
+                              <td class='edit'><a href='update-post.php?id=<?php echo $row['post_id'];?>'><i class='fa fa-edit'></i></a></td>
                               <td class='delete'><a href='delete-post.php'><i class='fa fa-trash-o'></i></a></td>
                           </tr>
                           <?php }?>
@@ -62,10 +61,10 @@ include "header.php"; ?>
                   </table>
                   <?php }
                   $query1 = "SELECT * FROM post";
-                  $result = mysqli_query($conn, $query1);
+                  $result1 = mysqli_query($conn, $query1);
 
-                  if(mysqli_num_rows($result) > 0){
-                    $total_records = mysqli_num_rows($result);
+                  if(mysqli_num_rows($result1) > 0){
+                    $total_records = mysqli_num_rows($result1);
                     $total_pages = ceil($total_records / $limit);
 
                     echo "<ul class='pagination admin-pagination'>";
