@@ -24,11 +24,18 @@ if(isset($_FILES['fileToUpload'])){
     die();
    }
 }
-
+session_start();
 $title = mysqli_real_escape_string($conn, $_POST['post_title']);
 $description = mysqli_real_escape_string($conn, $_POST['postdesc']);
 $category = mysqli_real_escape_string($conn, $_POST['category']);
 $date = date("d M, Y");
 $author = $_SESSION['user_id'];
+
+$query = "INSERT into post(title, description, category, post_date, author, post_img) VALUES('{$title}', '{$description}', '{$category}', '{$date}', '{$author}', '{$file_name}');";
+$query .= "UPDATE category SET post = post + 1 WHERE category_id = {$category}";
+
+if(mysqli_multi_query($conn, $query)){
+   header("Location: {$hostname}/admin/post.php");
+}
 
 ?>
