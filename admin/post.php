@@ -1,4 +1,6 @@
-<?php include "header.php"; ?>
+<?php 
+session_start();
+include "header.php"; ?>
   <div id="admin-content">
       <div class="container">
           <div class="row">
@@ -18,10 +20,18 @@
                         $page = 1;
                     }
                     $offset = ($page - 1) * $limit;
-                    $query = "SELECT post.post_id, post.title, post.description, post.post_date, category.category_name, user.username FROM post
-                    LEFT JOIN category ON post.category = category.category_id
-                    LEFT JOIN user ON post.author = user.user_id
-                    ORDER BY post.post_id DESC LIMIT {$offset}, {$limit}";
+                    if($_SESSION['role'] == '1'){
+                        $query = "SELECT post.post_id, post.title, post.description, post.post_date, category.category_name, user.username FROM post
+                        LEFT JOIN category ON post.category = category.category_id
+                        LEFT JOIN user ON post.author = user.user_id
+                        ORDER BY post.post_id DESC LIMIT {$offset}, {$limit}";
+                    }elseif($_SESSION['role'] == '0'){
+                        $query = "SELECT post.post_id, post.title, post.description, post.post_date, category.category_name, user.username FROM post
+                        LEFT JOIN category ON post.category = category.category_id
+                        LEFT JOIN user ON post.author = user.user_id
+                        WHERE post.author = '{$_SESSION['user_id']}'
+                        ORDER BY post.post_id DESC LIMIT {$offset}, {$limit}";
+                    }
 
                     $result = mysqli_query($conn, $query);
                     if(mysqli_num_rows($result) > 0){
