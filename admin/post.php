@@ -68,19 +68,19 @@ include "header.php"; ?>
                     $total_pages = ceil($total_records / $limit);
 
                     echo "<ul class='pagination admin-pagination'>";
+                    if($page > 1){
+                        echo '<li><a href="post.php?page='.($page - 1).'">Prev</a></li>';
+                    }
                     for($i = 1; $i <= $total_pages; $i++){
-                        if($page > 1){
-                            echo '<li><a href="post.php?page='.($page - 1).'">Prev</a></li>';
-                        }
                         if($i == $page){
                             $active = "active";
                         }else{
                             $active = "";
                         }
                         echo '<li class="'.$active.'"><a href="post.php?page='. $i .'">'.$i.'</a></li>';
-                        if($total_pages > $page){
-                            echo '<li><a href="post.php?page='.($page + 1).'">Next</a></li>';
-                        }
+                    }
+                    if($total_pages > $page){
+                        echo '<li><a href="post.php?page='.($page + 1).'">Next</a></li>';
                     }
                     echo "</ul>";
                   }
